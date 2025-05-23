@@ -19,14 +19,18 @@ $livros = $stm->fetchAll();
 if(isset($_POST["titulo"])) {
     //Obter os valores digitados pelo usuário
     $titulo = $_POST["titulo"];
+    $autor  = $_POST["autor"];
     $genero = $_POST["genero"];
     $qtdPag = $_POST["paginas"];
 
     //Inserir as informações na base de dados
-    $sql = "INSERT INTO livros (titulo, genero, qtd_paginas) 
-            VALUES (?, ?, ?)";
+    $sql = "INSERT INTO livros (titulo, autor, genero, qtd_paginas) 
+            VALUES (?, ?, ?, ?)";
     $stm = $con->prepare($sql);
-    $stm->execute([$titulo, $genero, $qtdPag]);
+    $stm->execute([$titulo, $autor, $genero, $qtdPag]);
+
+    //Redirecionar para a mesma página a fim de limpar o buffer do navegodor
+    header("location: index.php");
 }
 
 ?>
@@ -44,16 +48,35 @@ if(isset($_POST["titulo"])) {
         <tr>
             <th>ID</th>
             <th>Título</th>
+            <th>Autor</th>
             <th>Gênero</th>
             <th>Páginas</th>
+            <th>Excluir</th>
         </tr>
 
         <?php foreach($livros as $l): ?>
             <tr>
                 <td><?= $l["id"] ?></td>
                 <td><?= $l["titulo"] ?></td>
-                <td><?= $l["genero"] ?></td>
+                <td><?= $l["autor"] ?></td>
+                <td>
+                    <?php 
+                        if($l["genero"] == 'D')
+                            echo "Drama";
+                        else if($l["genero"] == 'R') 
+                            echo "Romance";
+                        else if($l["genero"] == 'F') 
+                            echo "Ficção";
+                        else
+                            echo "Outro";
+                    ?>
+                </td>
                 <td><?= $l["qtd_paginas"] ?></td>
+                <td>
+                    <a href="excluir.php?id=<?= $l["id"] ?>"
+                        onclick="return confirm('Confirma a exclusão?');">
+                        Excluir</a>
+                </td>
             </tr>
         <?php endforeach; ?>
     </table>
@@ -65,6 +88,11 @@ if(isset($_POST["titulo"])) {
         <div style="margin-bottom: 10px;">
             <label for="titulo">Título: </label>
             <input type="text" name="titulo" id="titulo" />
+        </div>
+
+        <div style="margin-bottom: 10px;">
+            <label for="autor">Autor: </label>
+            <input type="text" name="autor" id="autor" />
         </div>
 
         <div style="margin-bottom: 10px;">
