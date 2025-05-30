@@ -15,6 +15,8 @@ $stm->execute();
 $livros = $stm->fetchAll();
 //echo "<pre>" . print_r($livros, true) . "</pre>";
 
+$msgErro = "";
+
 //Verificar se o usuário já clicou no Gravar
 if(isset($_POST["titulo"])) {
     //Obter os valores digitados pelo usuário
@@ -23,14 +25,29 @@ if(isset($_POST["titulo"])) {
     $genero = $_POST["genero"];
     $qtdPag = $_POST["paginas"];
 
-    //Inserir as informações na base de dados
-    $sql = "INSERT INTO livros (titulo, autor, genero, qtd_paginas) 
-            VALUES (?, ?, ?, ?)";
-    $stm = $con->prepare($sql);
-    $stm->execute([$titulo, $autor, $genero, $qtdPag]);
+    //Validar os dados
+    $erros = array();
+    if(! $titulo)
+        array_push($erros, 'Informe o título!');
+    if(! $autor)
+        array_push($erros, 'Informe o autor!');
+    if(! $genero)
+        array_push($erros, 'Informe o gênero!');
+    if(! $qtdPag)
+        array_push($erros, 'Informe a quantidade de páginas!');
 
-    //Redirecionar para a mesma página a fim de limpar o buffer do navegodor
-    header("location: index.php");
+    if(count($erros) == 0) {
+        //Inserir as informações na base de dados
+        $sql = "INSERT INTO livros (titulo, autor, genero, qtd_paginas) 
+                VALUES (?, ?, ?, ?)";
+        $stm = $con->prepare($sql);
+        $stm->execute([$titulo, $autor, $genero, $qtdPag]);
+
+        //Redirecionar para a mesma página a fim de limpar o buffer do navegodor
+        header("location: index.php");
+    } else {
+        $msgErro = implode("<br>", $erros);
+    }
 }
 
 ?>
@@ -84,7 +101,9 @@ if(isset($_POST["titulo"])) {
 
     <h1>Formulário</h1>
 
-    <form action="" method="POST">
+    <!--form action="" method="POST" 
+            onsubmit="return validarCampos();"-->
+    <form action="" method="POST" >
         <div style="margin-bottom: 10px;">
             <label for="titulo">Título: </label>
             <input type="text" name="titulo" id="titulo" />
@@ -115,6 +134,11 @@ if(isset($_POST["titulo"])) {
             <button type="submit">Gravar</button>
         </div>
     </form>
+
+    <div id="divErro" style="color: red;">
+        <?= $msgErro ?>
+    </div>
     
+    <script src="js/validacao.js"></script>
 </body>
 </html>
