@@ -26,4 +26,4 @@ CREATE TABLE alunos (
   id_curso int NOT NULL, 
   CONSTRAINT pk_alunos PRIMARY KEY (id)
 );
-ALTER TABLE alunos ADD CONSTRAINT fk_curso FOREIGN KEY (id_curso) REFERENCES cursos (id);
+ALTER TABLE alunos ADD CONSTRAINT    FOREIGN KEY (id_curso) REFERENCES cursos (id);
