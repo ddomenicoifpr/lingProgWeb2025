@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__ . "/../dao/AlunoDAO.php");
+require_once(__DIR__ . "/../model/Aluno.php");
 
 class AlunoController {
 
@@ -13,6 +14,10 @@ class AlunoController {
     public function listar() {
         $lista = $this->alunoDAO->listar();
         return $lista;
+    }
+
+    public function inserir(Aluno $aluno) {
+        $this->alunoDAO->inserir($aluno);
     }
 
 }
