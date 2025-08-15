@@ -16,21 +16,27 @@ include_once(__DIR__ . "/../include/header.php");
     <div>
         <label for="txtNome">Nome:</label>
         <input type="text" id="txtNome" name="nome"
-            placeholder="Informe o nome">
+            placeholder="Informe o nome"
+            value="<?= $aluno ? $aluno->getNome() : '' ?>">
     </div>
 
     <div>
         <label for="txtIdade">Idade:</label>
         <input type="number" id="txtIdade" name="idade"
-            placeholder="Informe a idade">
+            placeholder="Informe a idade"
+            value="<?= $aluno ? $aluno->getIdade() : '' ?>">
     </div>
 
     <div>
         <label for="selEstrang">Estrangeiro:</label>
         <select name="estrang" id="selEstrang">
             <option value="">----Selecione----</option>
-            <option value="S">Sim</option>
-            <option value="N">Não</option>
+            <option value="S"
+               <?= $aluno && $aluno->getEstrangeiro() == 'S' ? 'selected' : '' ?> 
+            >Sim</option>
+            <option value="N"
+                <?= $aluno && $aluno->getEstrangeiro() == 'N' ? 'selected' : '' ?>
+            >Não</option>
         </select>
     </div>
 
@@ -40,7 +46,15 @@ include_once(__DIR__ . "/../include/header.php");
             <option value="">----Selecione----</option>
 
             <?php foreach($cursos as $c): ?>
-                <option value="<?= $c->getId() ?>">
+                <option value="<?= $c->getId() ?>" 
+                
+                <?php
+                    if($aluno && $aluno->getCurso() && 
+                        $aluno->getCurso()->getId() == $c->getId())
+                        echo "selected"; 
+                ?>
+
+                >
                     <?= $c ?><!-- Chama o toString da classe -->
                 </option>
             <?php endforeach; ?>

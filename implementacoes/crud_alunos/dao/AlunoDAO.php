@@ -15,12 +15,31 @@ class AlunoDAO {
         $sql = "SELECT a.*, 
                     c.nome nome_curso, c.turno turno_curso 
                 FROM alunos a
-                    JOIN cursos c ON (c.id = a.id_curso)";
+                    JOIN cursos c ON (c.id = a.id_curso)
+                ORDER BY a.nome";
         $stm = $this->conexao->prepare($sql);
         $stm->execute();
         $result = $stm->fetchAll();
 
         return $this->map($result);
+    }
+
+    public function buscarPorId(int $id) {
+        $sql = "SELECT a.*, 
+                    c.nome nome_curso, c.turno turno_curso 
+                FROM alunos a
+                    JOIN cursos c ON (c.id = a.id_curso)
+                WHERE a.id = ?";
+        $stm = $this->conexao->prepare($sql);
+        $stm->execute([$id]);
+        $result = $stm->fetchAll();
+
+        $alunos = $this->map($result);
+
+        if(count($alunos) > 0)
+            return $alunos[0];
+        else
+            return NULL;
     }
 
     public function inserir(Aluno $aluno) {

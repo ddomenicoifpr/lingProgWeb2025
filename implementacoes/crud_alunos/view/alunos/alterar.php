@@ -6,9 +6,11 @@ require_once(__DIR__ . "/../../controller/AlunoController.php");
 $msgErro = "";
 $aluno = null;
 
-//Receber os dados do formulário
+//Teste se o usuário já clicou no gravar
 if(isset($_POST['nome'])) {
-    //Usuário já clicou no gravar
+    //Já clicou no gravar
+    //1- Capturar os dados do formulário
+    $id          = 0; //Chegar por POST
     $nome        = trim($_POST['nome']) ? trim($_POST['nome']) : NULL;
     $idade       = is_numeric($_POST['idade']) ? $_POST['idade'] : NULL;
     $estrangeiro = trim($_POST['estrang']) ? trim($_POST['estrang']) : NULL;
@@ -16,6 +18,7 @@ if(isset($_POST['nome'])) {
 
     //Criar um objeto Aluno para persistí-lo
     $aluno = new Aluno();
+    $aluno->setId($id);
     $aluno->setNome($nome);
     $aluno->setIdade($idade);
     $aluno->setEstrangeiro($estrangeiro);
@@ -26,11 +29,10 @@ if(isset($_POST['nome'])) {
         $aluno->setCurso($curso);
     } else
         $aluno->setCurso(NULL);
-    //print_r($aluno);
 
-    //Chamar o DAO para salvar o objeto Aluno
+    //2- Chamar o controller para alterar
     $alunoCont = new AlunoController();
-    $erros = $alunoCont->inserir($aluno);
+    $erros = array(); //$alunoCont->alterar($aluno);
 
     if(! $erros) {
         //Redirecionar para o listar
@@ -39,7 +41,22 @@ if(isset($_POST['nome'])) {
         //Converter o array de erros para string
         $msgErro = implode("<br>", $erros);
     }
+
+
+} else {
+    //Usuário abriu a página para ver o formulário
+    $id = 0;
+    if(isset($_GET["id"]))
+        $id = $_GET["id"];
+
+    $alunoCont = new AlunoController();
+    $aluno = $alunoCont->buscarPorId($id);
+
+    if(! $aluno) {
+        echo "ID do aluno é inválido!<br>";
+        echo "<a href='listar.php'>Voltar</a>";
+        exit;
+    }
 }
 
 include_once(__DIR__ . "/form.php");
-?>
