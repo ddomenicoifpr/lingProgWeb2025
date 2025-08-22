@@ -43,7 +43,12 @@
                     <img src="../../img/btn_editar.png">
                 </a> 
             </td>
-            <td></td>
+            <td>
+                <a href="excluir.php?id=<?= $aluno->getId() ?>"
+                    onclick="return confirm('Confirma a exclusão?');">
+                    <img src="../../img/btn_excluir.png">
+                </a>
+            </td>
         </tr>
     <?php endforeach; ?>
 

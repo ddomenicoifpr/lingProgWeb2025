@@ -56,6 +56,23 @@ class AlunoDAO {
         }
     }
 
+    public function alterar(Aluno $aluno) {
+        try {
+            $sql = "UPDATE alunos SET nome = ?, idade = ?,
+                        estrangeiro = ?, id_curso = ?
+                    WHERE id = ?";
+            $stm = $this->conexao->prepare($sql);
+            $stm->execute([
+                $aluno->getNome(), $aluno->getIdade(),
+                $aluno->getEstrangeiro(), $aluno->getCurso()->getId(),
+                $aluno->getId()
+            ]);
+            return NULL;
+        } catch(PDOException $e) {
+            return $e;
+        }
+    }
+
     private function map(array $result) {
         $alunos = array();
         foreach($result as $r) {
