@@ -56,6 +56,19 @@ class AlunoController {
         return $erros;
     }
 
+    public function excluirPorId(int $id) {
+        $erros = array();
+        
+        $erro = $this->alunoDAO->excluirPorId($id);
+        if($erro) {
+            array_push($erros, "Erro ao excluir o aluno!");
+            if(AMB_DEV)
+                array_push($erros, $erro->getMessage());
+        }
+
+        return $erros;
+    }
+
 
 
 }
