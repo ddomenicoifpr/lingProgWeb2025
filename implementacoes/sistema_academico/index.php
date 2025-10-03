@@ -1,4 +1,10 @@
 <?php
+
+require_once(__DIR__ . "/util/config.php");
+session_start();
+$nome = $_SESSION[SESSAO_USUARIO_NOME];
+echo $nome;
+
 //Inclusão do HTML do header
 include_once(__DIR__ . "/view/include/header.php");
 ?>
@@ -7,7 +13,7 @@ include_once(__DIR__ . "/view/include/header.php");
 	<div class="col-3">
 		<div class="card text-center">
 			<img class="card-image-top mx-auto"
-					src="" 
+					src="img/card_alunos.png" 
 					style="max-width: 200px; height: auto;" />
 	
 			<div class="card-body">
@@ -15,7 +21,7 @@ include_once(__DIR__ . "/view/include/header.php");
 			</div>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">
-					<a href="" 
+					<a href="view/alunos/listar.php" 
 						class="card-link">
 						Listagem de Alunos</a>
 				</li>
@@ -26,7 +32,7 @@ include_once(__DIR__ . "/view/include/header.php");
 	<div class="col-3">
 		<div class="card text-center">
 			<img class="card-image-top mx-auto"
-					src="" 
+					src="img/card_turmas.png" 
 					style="max-width: 200px; height: auto;" />
 	
 			<div class="card-body">
