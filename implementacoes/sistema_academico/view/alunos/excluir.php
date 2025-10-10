@@ -1,5 +1,7 @@
 <?php
 
+include_once(__DIR__ . "/../login/validar.php");
+
 require_once(__DIR__ . "/../../controller/AlunoController.php");
 
 //1- Receber o ID do aluno (GET)

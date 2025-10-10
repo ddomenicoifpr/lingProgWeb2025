@@ -30,4 +30,16 @@ class LoginController {
         return $erros;
     }
 
+    public function logout() {
+        $this->loginService->apagarDadosSessao();
+    }
+
+    public function getNomeUsuarioLogado() {
+        return $this->loginService->getNomeUsuarioLogado();
+    }
+
+    public function usuarioEstaLogado() {
+        return $this->loginService->usuarioEstaLogado();
+    }
+
 }

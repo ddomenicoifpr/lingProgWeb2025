@@ -17,3 +17,6 @@ define("AMB_DEV", true);
 //Configurar variáveis para a sessão do usuário (login)
 define("SESSAO_USUARIO_ID", "USUARIOID");
 define("SESSAO_USUARIO_NOME", "USUARIONOME");
+
+//Configuração da URL base do sistema
+define("URL_BASE", "/sistema_academico");

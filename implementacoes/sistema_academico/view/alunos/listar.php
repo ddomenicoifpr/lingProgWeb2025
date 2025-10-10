@@ -1,4 +1,6 @@
 <?php
+    include_once(__DIR__ . "/../login/validar.php");
+
     require_once(__DIR__ . "/../../controller/AlunoController.php");   
 
     //Chamar o controller para obter a lista de alunos
@@ -10,6 +12,9 @@
 
     //Incluir o header
     include_once(__DIR__ . "/../include/header.php");
+
+    //Incluir o menu
+    include_once(__DIR__ . "/../include/menu.php");
 ?>
 
 <h3>Listagem de Alunos</h3> 
