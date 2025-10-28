@@ -20,3 +20,7 @@ define("SESSAO_USUARIO_NOME", "USUARIONOME");
 
 //Configuração da URL base do sistema
 define("URL_BASE", "/sistema_academico");
+
+//Configuração para arquivos
+define("DIR_ARQUIVOS", __DIR__ . "/../arquivos");
+define("URL_ARQUIVOS", URL_BASE . "/arquivos");
