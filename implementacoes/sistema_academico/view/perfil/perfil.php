@@ -1,16 +1,23 @@
 <?php
 include_once(__DIR__ . "/../login/validar.php");
 
+include_once(__DIR__ . "/../../controller/LoginController.php");
+
 //Carregar o objeto referente ao usuário logado
-$usuario = null;
+$loginCont = new LoginController();
+$usuario = $loginCont->getUsuarioLogado();
 if(!$usuario) {
     echo "Usuário não encontrado!";
     exit;
 }
 
 $msgErro = "";
-//TODO - Receber os dados do formulário
 
+//Receber os dados do formulário
+//Verificar se o usuário já clicou no gravar
+if(isset($_FILES['foto'])) {
+    print_r($_FILES['foto']);
+}
 
 //Inclusão do header e do Menu
 include_once(__DIR__ . "/../include/header.php");
@@ -48,7 +55,19 @@ include_once(__DIR__ . "/../include/menu.php");
 <div class="row mt-5">
     
     <div class="col-6">
-        <!-- TODO: formulário para alterar a foto de perfil -->
+        <form action="" method="POST"
+            enctype="multipart/form-data" >
+
+            <div>
+                <label for="foto" class="form-label">Foto de perfil: </label>
+                <input id="foto" type="file" name="foto"
+                    class="form-control" accept="image/*">
+            </div>
+
+            <div class="mt-3">
+                <button class="btn btn-success">Gravar</button>
+            </div>
+        </form>
     </div>
 
     <div class="col-6">

@@ -7,6 +7,9 @@ $cursos = $cursoCont->listar();
 //print_r($cursos);
 
 include_once(__DIR__ . "/../include/header.php");
+
+//Incluir o menu
+include_once(__DIR__ . "/../include/menu.php");
 ?>
 
 <h3><?= $aluno && $aluno->getId() > 0 ? 'Alterar' : 'Inserir' ?> 

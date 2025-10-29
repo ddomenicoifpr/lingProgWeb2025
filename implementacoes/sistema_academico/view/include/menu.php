@@ -33,6 +33,8 @@ $nome = $loginCont->getNomeUsuarioLogado();
                     id="navDropDown" data-bs-toggle="dropdown"><?= $nome ?></a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" 
+                        href="<?= URL_BASE ?>/view/perfil/perfil.php">Perfil</a>
+                    <a class="dropdown-item" 
                         href="<?= URL_BASE ?>/view/login/sair.php">Sair</a>
                 </div>
             </li>

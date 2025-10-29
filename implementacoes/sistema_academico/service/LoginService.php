@@ -2,8 +2,15 @@
 
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../util/config.php");
+require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 
 class LoginService {
+
+    private UsuarioDAO $usuarioDAO;
+
+    public function __construct() {
+        $this->usuarioDAO = new UsuarioDAO();
+    }
 
     public function validarLogin(?string $login, ?string $senha) {
 
@@ -40,6 +47,13 @@ class LoginService {
             return $_SESSION[SESSAO_USUARIO_NOME];
 
         return "(Não autenticado)";
+    }
+
+    public function getUsuarioLogado(): ?Usuario {
+        if($this->usuarioEstaLogado())
+            return $this->usuarioDAO->findById($_SESSION[SESSAO_USUARIO_ID]); 
+
+        return null;
     }
 
     public function usuarioEstaLogado() {
