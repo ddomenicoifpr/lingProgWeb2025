@@ -2,6 +2,7 @@
 include_once(__DIR__ . "/../login/validar.php");
 
 include_once(__DIR__ . "/../../controller/LoginController.php");
+include_once(__DIR__ . "/../../controller/PerfilController.php");
 
 //Carregar o objeto referente ao usuário logado
 $loginCont = new LoginController();
@@ -11,12 +12,30 @@ if(!$usuario) {
     exit;
 }
 
+//Carregar mensagem de sucesso de acordo com o parâmetro GET msg
+$msgSucesso = "";
+if(isset($_GET['msg']) && $_GET['msg'] == 1) {
+    $msgSucesso = "Foto de perfil atualiza com sucesso.";
+}
+
+
 $msgErro = "";
 
 //Receber os dados do formulário
 //Verificar se o usuário já clicou no gravar
 if(isset($_FILES['foto'])) {
-    print_r($_FILES['foto']);
+    //print_r($_FILES['foto']);
+    $foto = $_FILES['foto'];
+
+    $perfCont = new PerfilController();
+
+    $erros = $perfCont->atualizar($usuario, $foto);
+    if($erros) {
+        $msgErro = implode("<br>", $erros);
+    } else {
+        header("location: " . URL_BASE . "/view/perfil/perfil.php?msg=1");
+    }
+
 }
 
 //Inclusão do header e do Menu
@@ -50,12 +69,20 @@ include_once(__DIR__ . "/../include/menu.php");
         <?php endif; ?>
     </div>
 
+    <div class="col-6 mb-2 mt-3">
+        <?php if($msgSucesso): ?>
+            <div class="alert alert-success">
+                <?= $msgSucesso ?>
+            </div>
+        <?php endif; ?>
+    </div>
+
 </div>
     
 <div class="row mt-5">
     
     <div class="col-6">
-        <form action="" method="POST"
+        <form action="perfil.php" method="POST"
             enctype="multipart/form-data" >
 
             <div>
