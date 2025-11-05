@@ -24,7 +24,8 @@ $nome = $loginCont->getNomeUsuarioLogado();
                 <div class="dropdown-menu">
                     <a class="dropdown-item" 
                         href="<?= URL_BASE ?>/view/alunos/listar.php">Alunos</a>
-                    <a class="dropdown-item" href="#">Turmas</a>
+                    <a class="dropdown-item" 
+                        href="<?= URL_BASE ?>/view/turmas/listar.php">Turmas</a>
                 </div>
             </li>
 

@@ -42,7 +42,7 @@ include_once(__DIR__ . "/view/include/menu.php");
 			</div>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">
-					<a href=""
+					<a href="<?= URL_BASE ?>/view/turmas/listar.php"
 						class="card-link">
 						Listagem de Turmas</a>
 				</li>
