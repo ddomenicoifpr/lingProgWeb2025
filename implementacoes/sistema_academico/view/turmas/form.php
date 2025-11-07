@@ -32,7 +32,8 @@ $cursos = $cursoCont->listar();
 
             <div>
                 <label for="selCurso" class="form-label">Curso:</label>
-                <select id="selCurso" name="curso" class="form-control">
+                <select id="selCurso" name="curso" class="form-control"
+                    onchange="carregarDisciplinas()">
                     <option value="0">---Selecione---</option>
                     <?php foreach($cursos as $c): ?>
                         <option value="<?= $c->getId() ?>"
@@ -82,7 +83,7 @@ $cursos = $cursoCont->listar();
 </div>
 
 
-<script src="js/turmas.js"></script>
+<script src="js/turma.js"></script>
 
 <?php 
 //Inclui o FOOTER
