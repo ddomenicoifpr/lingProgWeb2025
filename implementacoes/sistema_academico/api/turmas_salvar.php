@@ -1,6 +1,8 @@
 <?php 
 
 require_once(__DIR__ . "/../model/Turma.php");
+require_once(__DIR__ . "/../controller/TurmaController.php");
+
 
 //Capturar os dados do formulário
 $ano     = is_numeric($_POST['ano']) ? $_POST['ano'] : null;
@@ -11,5 +13,13 @@ $idDisc  = is_numeric($_POST['idDisc']) ? $_POST['idDisc'] : null;
 $turma = new Turma();
 $turma->setAno($ano);
 $turma->setDisciplina(new Disciplina($idDisc));
+//print_r($turma);
 
-print_r($turma);
+$turmaCont = new TurmaController();
+$erros = $turmaCont->salvar($turma);
+
+$msgErro = "";
+if($erros)
+    $msgErro = implode("<br>", $erros);
+
+echo $msgErro;
