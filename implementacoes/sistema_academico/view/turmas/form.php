@@ -18,6 +18,9 @@ $cursoCont = new CursoController();
 $cursos = $cursoCont->listar();
 ?>
 
+<span id="confUrlBase" 
+        data-url-base="<?= URL_BASE ?>"></span>
+
 <h2><?php echo (!$turma || $turma->getId() <= 0 ? 'Inserir' : 'Alterar') ?> Turma</h2>
 
 <div class="row mb-3">
@@ -58,7 +61,8 @@ $cursos = $cursoCont->listar();
             <button type="submit" class="btn btn-success mt-3">Gravar</button>
             
             <?php if(! $turma || $turma->getId() <= 0): ?> 
-                <button type="button" class="btn btn-warning mt-3">
+                <button type="button" class="btn btn-warning mt-3"
+                    onclick="salvarTurma()" >
                     Gravar AJAX
                 </button>
             <?php endif; ?>

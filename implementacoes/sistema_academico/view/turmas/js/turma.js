@@ -1,6 +1,9 @@
 const selCurso = document.querySelector("#selCurso");
 const selDisc = document.querySelector("#selDisciplina");
 
+const URL_BASE = document.querySelector("#confUrlBase").dataset.urlBase;
+//console.log(URL_BASE);
+
 //carregarDisciplinasSincrono();
 carregarDisciplinas();
 
@@ -13,8 +16,8 @@ function carregarDisciplinas() {
     adicionarOptionDisciplina(selecione);
     
     //Enviar a requisição AJAX
-    var url = 
-        "/sistema_academico/api/disciplinas_por_curso.php?idCurso=" 
+    var url = URL_BASE + 
+        "/api/disciplinas_por_curso.php?idCurso=" 
             + selCurso.value;
     
     var xhttp = new XMLHttpRequest();
@@ -33,8 +36,6 @@ function carregarDisciplinas() {
     }
 
     xhttp.send();
-    
-    console.log("Requisição enviada");
 }
 
 function carregarDisciplinasSincrono() {
@@ -70,4 +71,25 @@ function adicionarOptionDisciplina(disciplina) {
     option.innerHTML = disciplina.codigo + " - " + disciplina.nome;
 
     selDisc.appendChild(option);
+}
+
+function salvarTurma() {
+    //Capturar os dados do formulário
+    const ano = document.querySelector("#txtAno").value;
+    const curso = selCurso.value;
+    const disciplina = selDisc.value;
+    //alert(ano + " - " + curso + " - " + disciplina);
+
+    const dados = new FormData();
+    dados.append("ano", ano);
+    dados.append("idCurso", curso);
+    dados.append("idDisc", disciplina);
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("POST", URL_BASE + "/api/turmas_salvar.php");
+    xhttp.onload = function() {
+        console.log(xhttp.responseText);
+    }
+
+    xhttp.send(dados);
 }
